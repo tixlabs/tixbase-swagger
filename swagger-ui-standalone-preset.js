@@ -10369,7 +10369,7 @@
             ),
           components_Logo = () =>
             n.createElement("img", {
-              src: "./tixbase_logo.png",
+              src: "./logo.png",
               alt: "Ihr Firmenlogo",
               height: "30",
               style: { marginRight: "10px" }, // Optional: zusätzliches Styling
