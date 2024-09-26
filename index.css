@@ -10,8 +10,8 @@
   --method-delete: #cf6679; /* Rötlich */
   --border-color: #272727; /* Etwas helleres Grau */
   --input-background: #1e1e1e; /* Dunkler Eingabefeld-Hintergrund */
-  --button-background: #2c47c1; /* Dunkles Lila */
-  --button-border: #838383; /* Lila Rahmen */
+  --button-background: #ff4805; /* Dunkles Lila */
+  --button-border: #ff7e4f; /* Lila Rahmen */
   --white-text: #ffffff; /* Neue weiße Textfarbe */
   --topbar-color: #2c2c2c; /* Neue, hellere Farbe für die Topbar */
 }
