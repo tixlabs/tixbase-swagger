@@ -1,0 +1,383 @@
+openapi: 3.0.0
+info:
+  title: Tixbase API
+  description: API for the Tixbase ticketing system, which manages the secondary market for tickets and integrates with the Passo platform. Tixbase utilizes blockchain technology to represent tickets as NFTs (Non-Fungible Tokens).
+  version: 1.0.0
+servers:
+  - url: https://api.tixbase.com/v1
+    description: Production server
+tags:
+  - name: Events
+    description: Event management operations
+  - name: Tickets
+    description: Ticket and NFT management operations
+paths:
+  /events/create:
+    post:
+      tags:
+        - Events
+      summary: Creates a new event
+      description: Creates a new event based on data transmitted from Passo and stores it in the Tixbase database.
+      operationId: createEvent
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  description: Unique identifier for the event from Passo
+                title:
+                  type: string
+                  description: Name of the event
+                startTime:
+                  type: string
+                  format: date-time
+                  description: Start time and date of the event
+                endTime:
+                  type: string
+                  format: date-time
+                  description: End time and date of the event
+                location:
+                  type: string
+                  description: Location of the event
+                description:
+                  type: string
+                  description: Detailed description of the event
+                venueName:
+                  type: string
+                  description: Name of the venue hosting the event
+                categories:
+                  type: string
+                  description: Categories or types of tickets available
+                image:
+                  type: string
+                  format: binary
+                  description: Event image or poster
+                seatingPlan:
+                  type: string
+                  format: binary
+                  description: Seating plan for the event
+              required:
+                - title
+                - startTime
+                - endTime
+                - location
+                - venueName
+      responses:
+        "200":
+          description: Event created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  event:
+                    type: object
+                    properties:
+                      passo_event_id:
+                        type: string
+                      event_name:
+                        type: string
+                      event_date:
+                        type: string
+                        format: date-time
+                      event_end:
+                        type: string
+                        format: date-time
+                      event_location:
+                        type: string
+                      event_description:
+                        type: string
+                      venue_name:
+                        type: string
+                      ticket_categories:
+                        type: array
+                        items:
+                          type: object
+                  seatingPlan:
+                    type: string
+        "400":
+          description: Missing required parameters or invalid input
+        "500":
+          description: Internal server error
+
+  /events/update/{eventId}:
+    put:
+      tags:
+        - Events
+      summary: Updates an existing event
+      description: Updates the details of an existing event in the Tixbase database.
+      operationId: updateEvent
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the event to be updated
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                startTime:
+                  type: string
+                  format: date-time
+                endTime:
+                  type: string
+                  format: date-time
+                location:
+                  type: string
+                description:
+                  type: string
+                venueName:
+                  type: string
+                categories:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                seatingPlan:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Event updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  event:
+                    type: object
+                    properties:
+                      passo_event_id:
+                        type: string
+                      event_name:
+                        type: string
+                      event_date:
+                        type: string
+                        format: date-time
+                      event_end:
+                        type: string
+                        format: date-time
+                      event_location:
+                        type: string
+                      event_description:
+                        type: string
+                      venue_name:
+                        type: string
+                      ticket_categories:
+                        type: array
+                        items:
+                          type: object
+                  seatingPlan:
+                    type: string
+        "400":
+          description: Missing required parameters or invalid input
+        "404":
+          description: Event not found
+        "500":
+          description: Internal server error
+
+  /events/{eventId}:
+    delete:
+      tags:
+        - Events
+      summary: Deletes an event
+      description: Removes an event from the Tixbase database.
+      operationId: deleteEvent
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the event to be deleted
+      responses:
+        "200":
+          description: Event deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        "400":
+          description: Invalid event ID
+        "404":
+          description: Event not found
+        "500":
+          description: Internal server error
+
+  /tickets/create:
+    post:
+      tags:
+        - Tickets
+      summary: Creates a new ticket
+      description: Creates a new ticket and corresponding NFT on the Avalanche Subnet Chain.
+      operationId: createTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  description: Unique identifier for the ticket
+                eventId:
+                  type: string
+                  description: ID of the associated event
+                ownerId:
+                  type: string
+                  description: ID of the ticket owner
+                ownerEmail:
+                  type: string
+                  description: Email of the ticket owner
+                categoryName:
+                  type: string
+                  description: Category or type of the ticket
+                price:
+                  type: number
+                  description: Price of the ticket
+              required:
+                - eventId
+                - ownerId
+                - ownerEmail
+                - categoryName
+                - price
+      responses:
+        "200":
+          description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  ticketId:
+                    type: string
+                  nftId:
+                    type: string
+        "400":
+          description: Missing required parameters
+        "404":
+          description: Event not found
+        "500":
+          description: Internal server error
+
+  /tickets/list:
+    post:
+      tags:
+        - Tickets
+      summary: Lists a ticket for sale
+      description: Lists a ticket for sale on the secondary market and updates its status in the database.
+      operationId: listTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticketId:
+                  type: string
+                  description: ID of the ticket to be listed
+                price:
+                  type: number
+                  description: Listing price for the ticket
+                duration:
+                  type: number
+                  description: Duration of the listing in hours
+              required:
+                - ticketId
+                - price
+      responses:
+        "200":
+          description: Ticket listed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  listingId:
+                    type: string
+        "400":
+          description: Missing required parameters
+        "404":
+          description: Ticket not found
+        "500":
+          description: Internal server error
+
+  /tickets/delist:
+    post:
+      tags:
+        - Tickets
+      summary: Delists a ticket from sale
+      description: Removes a ticket from the secondary market listings and updates its status.
+      operationId: delistTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passoTicketId:
+                  type: string
+                  description: Passo's unique identifier for the ticket
+                userId:
+                  type: string
+                  description: ID of the user delisting the ticket
+                userEmail:
+                  type: string
+                  description: Email of the user delisting the ticket
+                eventId:
+                  type: string
+                  description: ID of the associated event
+                ticketCategory:
+                  type: string
+                  description: Category of the ticket
+                amount:
+                  type: number
+                  description: Price of the ticket
+              required:
+                - passoTicketId
+                - userId
+                - userEmail
+                - eventId
+      responses:
+        "200":
+          description: Ticket delisted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "400":
+          description: Missing required parameters or invalid input
+        "404":
+          description: Ticket or event not found
+        "500":
+          description: Internal server error

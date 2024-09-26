@@ -1,0 +1,163 @@
+:root {
+  --primary-color: #000000;
+  --secondary-color: #c2dfff;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --method-get: #2981fe;
+  --method-post: #0b301f;
+  --method-put: #fca130;
+  --method-delete: #f93e3e;
+  --border-color: #c9dffe;
+  --input-background: #ffffff;
+  --button-background: #003d80; 
+  --button-border: #003366; /
+}
+
+.swagger-ui {
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.swagger-ui .version-span {
+  color: var(
+    --button-background
+  ) !important; 
+}
+.swagger-ui .download-url-button {
+  display: block;
+  border: 2px solid var(--button-border);
+  background-color: var(--button-background) !important;
+  color: white;
+}
+
+.swagger-ui .download-url-input {
+  display: block;
+  border: 2px solid var(--button-border) !important;
+}
+
+.swagger-ui .topbar {
+  background-color: var(--secondary-color);
+  padding: 30px;
+}
+
+.swagger-ui .topbar .download-url-wrapper .select-label {
+  color: var(--text-color);
+}
+
+.swagger-ui .info .title {
+  color: var(--primary-color);
+}
+
+.swagger-ui .opblock-tag {
+  border-bottom-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.swagger-ui .opblock {
+  border: 1px solid var(--border-color);
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: var(--text-color);
+}
+
+.swagger-ui .btn.execute {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.swagger-ui section.models {
+  border-color: var(--border-color);
+  background-color: #ffffff;
+}
+
+.swagger-ui .model-box {
+  background-color: var(--secondary-color);
+}
+
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p {
+  color: var(--text-color);
+}
+
+.swagger-ui table thead tr td,
+.swagger-ui table thead tr th {
+  color: var(--text-color);
+  border-bottom-color: var(--border-color);
+}
+
+.swagger-ui .parameter__name,
+.swagger-ui .parameter__type,
+.swagger-ui .response-col_status,
+.swagger-ui .response-col_description {
+  color: var(--text-color);
+}
+
+.swagger-ui input[type="text"],
+.swagger-ui select {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.swagger-ui .opblock-summary-operation-id,
+.swagger-ui .opblock-summary-path,
+.swagger-ui .opblock-summary-path__deprecated {
+  color: var(--text-color);
+}
+
+.swagger-ui .markdown p,
+.swagger-ui .markdown pre,
+.swagger-ui .renderedMarkdown p,
+.swagger-ui .renderedMarkdown pre {
+  color: var(--text-color);
+}
+
+.swagger-ui .model {
+  color: var(--text-color);
+}
+
+
+
+/* Zusätzliche Anpassungen */
+.swagger-ui .opblock-summary-method {
+  background-color: var(--primary-color);
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method,
+.swagger-ui .opblock.opblock-get .opblock-summary {
+  border-color: var(--method-get);
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary-method,
+.swagger-ui .opblock.opblock-post .opblock-summary {
+  border-color: var(--method-post);
+}
+
+.swagger-ui .opblock.opblock-put .opblock-summary-method,
+.swagger-ui .opblock.opblock-put .opblock-summary {
+  border-color: var(--method-put);
+}
+
+.swagger-ui .opblock.opblock-delete .opblock-summary-method,
+.swagger-ui .opblock.opblock-delete .opblock-summary {
+  border-color: var(--method-delete);
+}
+
+.swagger-ui .authorize-btn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.swagger-ui .btn {
+  box-shadow: 0 0 0 1px var(--border-color);
+}
