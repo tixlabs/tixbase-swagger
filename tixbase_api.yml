@@ -50,8 +50,15 @@ paths:
                   type: string
                   description: Name of the venue hosting the event
                 categories:
-                  type: string
-                  description: Categories or types of tickets available
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      price:
+                        type: number
+                  description: Array of ticket categories with name and price
                 image:
                   type: string
                   format: binary
@@ -61,11 +68,12 @@ paths:
                   format: binary
                   description: Seating plan for the event
               required:
+                - _id
                 - title
                 - startTime
-                - endTime
                 - location
                 - venueName
+                - image
       responses:
         "200":
           description: Event created successfully
@@ -74,32 +82,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                  event:
-                    type: object
-                    properties:
-                      passo_event_id:
-                        type: string
-                      event_name:
-                        type: string
-                      event_date:
-                        type: string
-                        format: date-time
-                      event_end:
-                        type: string
-                        format: date-time
-                      event_location:
-                        type: string
-                      event_description:
-                        type: string
-                      venue_name:
-                        type: string
-                      ticket_categories:
-                        type: array
-                        items:
-                          type: object
-                  seatingPlan:
+                  message:
                     type: string
         "400":
           description: Missing required parameters or invalid input
@@ -142,7 +125,14 @@ paths:
                 venueName:
                   type: string
                 categories:
-                  type: string
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      price:
+                        type: number
                 image:
                   type: string
                   format: binary
@@ -157,32 +147,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                  event:
-                    type: object
-                    properties:
-                      passo_event_id:
-                        type: string
-                      event_name:
-                        type: string
-                      event_date:
-                        type: string
-                        format: date-time
-                      event_end:
-                        type: string
-                        format: date-time
-                      event_location:
-                        type: string
-                      event_description:
-                        type: string
-                      venue_name:
-                        type: string
-                      ticket_categories:
-                        type: array
-                        items:
-                          type: object
-                  seatingPlan:
+                  message:
                     type: string
         "400":
           description: Missing required parameters or invalid input
@@ -213,8 +178,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
                   message:
                     type: string
         "400":
@@ -342,29 +305,11 @@ paths:
             schema:
               type: object
               properties:
-                passoTicketId:
+                ticketId:
                   type: string
-                  description: Passo's unique identifier for the ticket
-                userId:
-                  type: string
-                  description: ID of the user delisting the ticket
-                userEmail:
-                  type: string
-                  description: Email of the user delisting the ticket
-                eventId:
-                  type: string
-                  description: ID of the associated event
-                ticketCategory:
-                  type: string
-                  description: Category of the ticket
-                amount:
-                  type: number
-                  description: Price of the ticket
+                  description: ID of the ticket to be delisted
               required:
-                - passoTicketId
-                - userId
-                - userEmail
-                - eventId
+                - ticketId
       responses:
         "200":
           description: Ticket delisted successfully
@@ -378,6 +323,6 @@ paths:
         "400":
           description: Missing required parameters or invalid input
         "404":
-          description: Ticket or event not found
+          description: Ticket not found
         "500":
           description: Internal server error
